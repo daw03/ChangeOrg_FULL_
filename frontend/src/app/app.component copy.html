@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Change.org</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f8cece">
+      <div class="container">
+        <a class="navbar-brand text-red" href="#">
+          <img src="assets/pngegg.png" alt="Change.org" class="img-fluid" style="max-height: 40px" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarContent">  <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link text-red" href="show">Peticiones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-red" href="petition/create">Iniciar una petición</a>
+            </li>
+          </ul>
+    
+          <ul class="navbar-nav ms-auto">
+            <div *ngIf="!isSignedIn">
+              <li class="nav-item">
+                <a class="btn btn-danger m-1" href="login">Iniciar sesión</a>
+              </li>
+              <li class="nav-item">
+                <a class="btn btn-outline-light m-1" href="register" role="button">Regístrate</a>
+              </li>
+            </div>
+    
+            <div *ngIf="isSignedIn">
+              <li class="nav-item">
+                <button class="btn btn-danger m-1" (click)="signOut()">Logout</button>
+              </li>
+              <li class="nav-item">
+                <a class="btn btn-outline-light m-1" href="profile" role="button">Perfil</a>
+              </li>
+            </div>
+          </ul>
+        </div>  </div>
+    </nav>
+
+    <!-- Content -->
+    <router-outlet></router-outlet>
+
+    <!-- Footer -->
+    <footer class="bg-light py-4">
+      <div class="container text-center">
+        <p>
+          &copy; 2024 Change.org | <a href="#">Privacy Policy</a> |
+          <a href="#">Terms of Service</a>
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

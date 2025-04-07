@@ -1,0 +1,23 @@
+<div class="jumbotron text-center" style="background-color: #f8f9fa">
+  <h1 class="display-4">The World’s Platform for Change</h1>
+  <p class="lead">Create a petition and make a change now!</p>
+  <button *ngIf="isSignedIn" class="btn btn-primary" routerLink="/petition/create">Iniciar petición</button>
+</div>
+
+<hr>
+
+<div class="container">
+  <h1 class="text-center mb-4" style="font-size: 3rem;">
+    Nuestras peticiones más populares
+  </h1>
+  <div *ngIf="peticiones.length > 0;" routerLink="/show">
+    <div *ngFor="let peticion of peticiones | slice:0:3" class="mb-4">
+      <div class="p-4" style="background: linear-gradient(to right, #fc1616, #9514ff); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h3 class="text-white" style="font-size: 2rem; font-weight: bold;">{{ peticion.titulo }}</h3>
+        <p class="text-white" style="font-size: 1.2rem;">{{ peticion.descripcion }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>

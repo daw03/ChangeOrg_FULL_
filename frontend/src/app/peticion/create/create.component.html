@@ -1,0 +1,48 @@
+<div class="auth-wrapper m-3">
+  <form class="form-signin" [formGroup]="peticionForm" (ngSubmit)="onSubmit()">
+    <h3 class="h3 mb-3 font-weight-normal text-center">Create Peticion</h3>
+    <!-- ['titulo', 'descripcion', 'destinatario', 'firmantes', 'estado', 'user_id', 'categoria_id'] -->
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" class="formcontrol m-2" formControlName="titulo" />
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <input
+        type="text"
+        class="formcontrol m-2"
+        formControlName="descripcion"
+      />
+    </div>
+    <div class="form-group">
+      <label>Destination</label>
+      <input
+        type="text"
+        class="formcontrol m-2"
+        formControlName="destinatario"
+      />
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <select
+      formControlName="categoria_id"
+      id="categoria_id"
+      class="form-select m-2 w-25"
+      >
+      <option value="1">Categoria 1</option>
+    </select>
+    </div>
+    <div>
+      <label>Imagen</label>
+      <input
+      type="file"
+      class="formcontrol m-2"
+      formControlName="file"
+      (change)="metoImagen($event)"
+      />
+    </div>
+    <button type="submit" class="btn btn-block btn-primary">
+      Create petition
+    </button>
+  </form>
+</div>
