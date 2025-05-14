@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(\App\Http\Controllers\PeticioneController::class)->group(function () {
     Route::get('peticiones', 'index');
     Route::get('mispeticiones', 'listmine');
+    Route::get('mispeticionesfirmadas', 'listminefirmadas');
     Route::get('peticiones/{id}', 'show');
     Route::delete('peticiones/{id}', 'delete');
     Route::put('peticiones/firmar/{id}', 'firmar');

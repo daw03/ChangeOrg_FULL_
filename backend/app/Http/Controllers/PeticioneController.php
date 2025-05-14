@@ -13,7 +13,8 @@ use Illuminate\Http\Request;
 class PeticioneController extends Controller
 {
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth:api', ['except' => ['index', 'show']]);
     }
     /**
@@ -21,35 +22,46 @@ class PeticioneController extends Controller
      */
     public function index()
     {
-        try{
-            $peticiones = Peticione::with('file','user','categoria')->get();
+        try {
+            $peticiones = Peticione::with('file', 'user', 'categoria')->get();
             return $peticiones;
-        }catch (\Exception $exception){
-           return response()->json(['error'=>$exception->getMessage()]);
+        } catch (\Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()]);
         }
 
     }
 
-    public function listmine(){
+    public function listmine()
+    {
 
-        try{
+        try {
             $user = Auth::user();
             //$id=1;
-            $peticiones = Peticione::with('file', 'user', 'categoria')->where('user_id', $user->id)->get(); 
+            $peticiones = Peticione::with('file', 'user', 'categoria')->where('user_id', $user->id)->get();
             return $peticiones;
-        }catch (\Exception $exception){
-            return response()->json(['error'=>$exception->getMessage()]);
+        } catch (\Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()]);
         }
+    }
 
+    public function listminefirmadas()
+    {
+        try {
+            $user = Auth::user();
+            $peticionesFirmadas = $user->firmas()->with('file', 'user', 'categoria')->get();
+            return response()->json($peticionesFirmadas);
+        } catch (\Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()], 500);
+        }
     }
 
     public function show(Request $request, $id)
     {
-        try{
-            $peticion = Peticione::with('file', 'user', 'categoria')->where('id',$id)->get();
+        try {
+            $peticion = Peticione::with('file', 'user', 'categoria')->where('id', $id)->get();
             return $peticion;
-        }catch (\Exception $exception){
-            return response()->json(['error'=>$exception->getMessage()]);
+        } catch (\Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()]);
         }
 
     }
@@ -59,15 +71,15 @@ class PeticioneController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
+        try {
             $peticion = Peticione::findOrFail($id);
-            if($request -> user()->cannot('update', $peticion)){
-                return response()->json(['error'=>'No autorizado'], 403);
+            if ($request->user()->cannot('update', $peticion)) {
+                return response()->json(['error' => 'No autorizado'], 403);
             }
             $peticion->update($request->all());
             return $peticion;
-        }catch (\Exception $exception){
-            return response()->json(['error'=>$exception->getMessage()]);
+        } catch (\Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()]);
         }
 
     }
@@ -79,7 +91,7 @@ class PeticioneController extends Controller
                 'descripcion' => 'required',
                 'destinatario' => 'required',
                 'categoria_id' => 'required',
-                'file'=>'required'
+                'file' => 'required'
             ]);
 
             $input = $request->all();
@@ -93,9 +105,9 @@ class PeticioneController extends Controller
             $peticion->estado = 'pendiente';
             $res = $peticion->save();
 
-            if($res){
-                $res_file=$this->fileUpload($request,$peticion->id);
-                if($res_file){
+            if ($res) {
+                $res_file = $this->fileUpload($request, $peticion->id);
+                if ($res_file) {
                     return $peticion;
                 }
                 return back()->withErrors('Error creando peticion')->withInput();
@@ -108,7 +120,8 @@ class PeticioneController extends Controller
 
     }
 
-    public function fileUpload(Request $req, $peticione_id = null){
+    public function fileUpload(Request $req, $peticione_id = null)
+    {
         $file = $req->file('file');
         $fileModel = new File;
         $fileModel->peticione_id = $peticione_id;
@@ -129,12 +142,12 @@ class PeticioneController extends Controller
     }
     public function firmar(Request $request, $id)
     {
-        try{
+        try {
             $peticion = Peticione::findOrFail($id);
             $user = Auth::user();
             $user_id = [$user->id];
-            if($request->user()->cannot('firmar',$peticion )){
-                return response()->json(['error'=>'Ya has firmado esta peticion'], 403);
+            if ($request->user()->cannot('firmar', $peticion)) {
+                return response()->json(['error' => 'Ya has firmado esta peticion'], 403);
             }
             //$user = 1;
             //$user_id = [$user];
@@ -143,37 +156,37 @@ class PeticioneController extends Controller
             $peticion->firmantes = $peticion->firmantes + 1;
             $peticion->save();
             return $peticion;
-        }catch (\Exception $exception){
-            return response()->json(['error'=>$exception->getMessage()]);
+        } catch (\Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()]);
         }
 
     }
     public function cambiarEstado(Request $request, $id)
     {
-        try{
+        try {
             $peticion = Peticione::findOrFail($id);
-            if($request -> user()->cannot('cambiarEstado', $peticion)){
-                return response()->json(['error'=>'No autorizado'], 403);
+            if ($request->user()->cannot('cambiarEstado', $peticion)) {
+                return response()->json(['error' => 'No autorizado'], 403);
             }
             $peticion->estado = 'aceptada';
             $peticion->save();
             return $peticion;
-        }catch (\Exception $exception){
-            return response()->json(['error'=>$exception->getMessage()]);
+        } catch (\Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()]);
         }
 
     }
     public function delete(Request $request, $id)
     {
-        try{
+        try {
             $peticion = Peticione::findOrFail($id);
-            if($request -> user()->cannot('delete', $peticion)){
-                return response()->json(['error'=>'No autorizado'], 403);
+            if ($request->user()->cannot('delete', $peticion)) {
+                return response()->json(['error' => 'No autorizado'], 403);
             }
             $peticion->delete();
             return $peticion;
-        }catch (\Exception $exception){
-            return response()->json(['error'=>$exception->getMessage()]);
+        } catch (\Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()]);
         }
 
     }
