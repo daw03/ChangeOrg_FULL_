@@ -31,9 +31,24 @@ export class PeticionService {
     return this.http.get('http://127.0.0.1:8000/api/mispeticiones')
   }
 
+  // Mostrar mis peticiones firmadas
+  myPeticionesFirmadas(): Observable<any> {
+    return this.http.get('http://127.0.0.1:8000/api/mispeticionesfirmadas')
+  }
+
   // Borrar
   delete(id: string): Observable<any> {
     return this.http.delete(`http://127.0.0.1:8000/api/peticiones/${id}`, {});
+  }
+
+  // Firmar
+  firmar(id: string): Observable<any> {
+    return this.http.put(`http://127.0.0.1:8000/api/peticiones/firmar/${id}`, {});
+  }
+
+  // Cambiar estado
+  estado(id: string): Observable<any> {
+    return this.http.put(`http://127.0.0.1:8000/api/peticiones/estado/${id}`, {});
   }
 
   // Actualizar

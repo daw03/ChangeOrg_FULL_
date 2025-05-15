@@ -9,6 +9,7 @@ import { IndexComponent } from './peticion/index/index.component';
 import { MineComponent } from './peticion/mine/mine.component';
 import { ViewComponent } from './peticion/view/view.component';
 import { EditComponent } from './peticion/edit/edit.component';
+import { FirmasComponent } from './peticion/firmas/firmas.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'petition/create', component: CreateComponent },
   { path: 'show', component: IndexComponent },
   { path: 'mine', component: MineComponent },
+  { path: 'minefirmas', component: FirmasComponent },
   { path: 'petition/:id', component: ViewComponent },
   { path: 'petition/edit/:id', component: EditComponent },
 ];

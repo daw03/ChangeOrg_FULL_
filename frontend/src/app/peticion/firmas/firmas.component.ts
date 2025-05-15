@@ -13,11 +13,11 @@ export class User {
 }
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css'],
+  selector: 'app-firmas',
+  templateUrl: './firmas.component.html',
+  styleUrls: ['./firmas.component.css'],
 })
-export class IndexComponent implements OnInit {
+export class FirmasComponent implements OnInit {
   isSignedIn!: boolean;
   peticiones!: Peticion[];
   isLoading = true;
@@ -28,13 +28,9 @@ export class IndexComponent implements OnInit {
     public peticionservice: PeticionService,
     private auth: AuthStateService,
     private authService: AuthService,
-
-
-
-    
     private router: Router
   ) {
-    this.peticionservice.index().subscribe(
+    this.peticionservice.myPeticionesFirmadas().subscribe(
       (data: any) => {
         this.peticiones = data;
       },
@@ -47,9 +43,6 @@ export class IndexComponent implements OnInit {
       if (this.isSignedIn) {
         this.authService.profileUser().subscribe((data: any) => {
           this.user = data;
-
-
-
           //console.log(data);
           this.isLoading = false;
         });
@@ -58,7 +51,7 @@ export class IndexComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
+  
   onDelete(id: any) {
     if (id) {
       this.peticionservice.delete(id.toString()).subscribe(
@@ -66,9 +59,6 @@ export class IndexComponent implements OnInit {
           window.location.reload();
         },
         (error) => {
-
-
-
           this.errors = error.error.error;
         }
       );

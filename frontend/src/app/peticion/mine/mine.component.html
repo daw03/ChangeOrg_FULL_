@@ -1,61 +1,49 @@
 <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1 class="text-center mb-4">Mis peticiones</h1>
-        <div *ngIf="peticiones.length > 0; else noPeticiones">
-          <div class="row">
-            <div *ngFor="let peticion of peticiones" class="col-md-6 col-sm-12">
-              <!-- ng if isOwner(peticion.user_id) Si la peticion es mia la mete sino no -->
-              <ng-container *ngIf="isOwner(peticion.user_id)">
-                <div class="card mb-3 shadow-sm">
-                  <div class="card-header bg-danger text-white fw-bold">
-                    {{ peticion.titulo }}
-                  </div>
-                  <div class="card-body">
-                    <p class="card-text"><strong>Descripción:</strong> {{ peticion.descripcion }}</p>
-                    <p class="card-text"><strong>Destinatario:</strong> {{ peticion.destinatario }}</p>
-                    <p class="card-text"><strong>Estado:</strong> {{ peticion.estado }}</p>
-                    <p class="card-text"><strong>Categoría:</strong> {{ peticion.categoria_id }}</p>
-                    <p class="card-text"><strong>ID Usuario:</strong> {{ peticion.user_id }}</p>
-                    <p class="card-text"><strong>ID:</strong> {{ peticion.id }}</p>
-                    <p class="card-text"><strong>Firmantes:</strong> {{ peticion.firmantes }}</p>
-    
-                    <!-- Imagen de la petición -->
-                    <div *ngIf="peticion.file && peticion.file.file_path" class="text-center my-3">
-                      <img
-                        [src]="'http://127.0.0.1:8000/storage/' + peticion.file.file_path"
-                        class="img-fluid img-thumbnail rounded shadow"
-                        alt="Imagen de la petición"
-                        style="max-height: 300px; object-fit: cover;"
-                      />
-                    </div>
-    
-                    <!-- Botones -->
-                    <a [routerLink]="['/petition', peticion.id]" class="btn btn-danger btn-sm">Información</a>
-                    <ng-container *ngIf="isSignedIn">
-                      <ng-container *ngIf="isOwner(peticion.user_id) || this.user.role_id == 1">
-                        <button class="btn btn-danger btn-sm ms-2" (click)="onDelete(peticion.id)">
-                          <i class="bi bi-trash"></i> Borrar
-                        </button>
-                      </ng-container>
-                    </ng-container>
-                  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center mb-4">Lista de Peticiones</h1>
+      <div *ngIf="peticiones.length > 0; else noPeticiones">
+        <div class="row">
+          <div *ngFor="let peticion of peticiones" class="col-md-6 col-sm-12">
+            <div class="card mb-3 shadow-sm">
+              <div class="card-header bg-danger text-white fw-bold">
+                {{ peticion.titulo }}
+              </div>
+              <div class="card-body">
+                <p class="card-text"><strong>Descripción:</strong> {{ peticion.descripcion }}</p>
+                <p class="card-text"><strong>Destinatario:</strong> {{ peticion.destinatario }}</p>
+                <p class="card-text"><strong>Estado:</strong> {{ peticion.estado }}</p>
+                <p class="card-text"><strong>Categoría:</strong> {{ peticion.categoria_id }}</p>
+                <p class="card-text"><strong>ID Usuario:</strong> {{ peticion.user_id }}</p>
+                <p class="card-text"><strong>ID:</strong> {{ peticion.id }}</p>
+                <p class="card-text"><strong>Firmantes:</strong> {{ peticion.firmantes }}</p>
+
+                <div *ngIf="peticion.file && peticion.file.file_path" class="text-center my-3">
+                  <img
+                    [src]="'http://127.0.0.1:8000/storage/' + peticion.file.file_path"
+                    class="img-fluid img-thumbnail rounded shadow"
+                    alt="Imagen de la petición"
+                    style="max-height: 300px; object-fit: cover;"
+                  />
                 </div>
-              </ng-container>
+
+                <!-- Botones -->
+                <a [routerLink]="['/petition', peticion.id]" class="btn btn-danger btn-sm">Información</a>
+              </div>
             </div>
           </div>
         </div>
-  
-        <!-- No hay peticiones -->
-        <ng-template #noPeticiones>
-          <p class="text-center text-muted">No hay peticiones para mostrar.</p>
-        </ng-template>
-  
-        <!-- Errores -->
-        <div *ngIf="errors" class="alert alert-danger mt-3">
-          <p>Error: {{ errors }}</p>
-        </div>
+      </div>
+
+      <!-- No hay peticiones -->
+      <ng-template #noPeticiones>
+        <p class="text-center text-muted">No hay peticiones para mostrar.</p>
+      </ng-template>
+
+      <!-- Errores -->
+      <div *ngIf="errors" class="alert alert-danger mt-3">
+        <p>Error: {{ errors }}</p>
       </div>
     </div>
   </div>
-  
+</div>
